@@ -43,9 +43,10 @@ CANDIDATE_COLUMNS = [
     "st_vj",
     "ra",
     "dec",
-    "pl_masse",
-    "pl_masseerr1",
-    "pl_masseerr2",
+    "pl_bmasse",
+    "pl_bmasseerr1",
+    "pl_bmasseerr2",
+    "pl_bmassprov",
     "pl_rade",
     "pl_radeerr1",
     "pl_radeerr2",
@@ -141,7 +142,7 @@ def build_base_rows(raw_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
         if not is_k:
             continue
 
-        mass = parse_number(row.get("pl_masse"))
+        mass = parse_number(row.get("pl_bmasse"))
         distance_pc = parse_number(row.get("sy_dist"))
 
         new = dict(row)
