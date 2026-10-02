@@ -111,8 +111,16 @@ def classify_k_dwarf(spectral_type: str | None) -> tuple[bool, str]:
     if not re.match(r"^K[0-9]", s):
         return False, "not_K"
 
-    if re.search(r"(IV|III|II|IB|IA)$", s):
-        return False, "non_main_sequence"
+    # Preserve ambiguous boundary cases, but do not silently call them clean
+    # K dwarfs. This keeps potentially useful systems while making the quality
+    # flag explicit for later strict filtering.
+    if "M" in s:
+        return True, "K_M_mixed_or_boundary"
+
+    if re.search(r"IV(?:/|$|\+|-)", s) or re.search(
+        r"(?:III|II|IB|IA)(?:/|$|\+|-)", s
+    ):
+        return True, "luminosity_class_ambiguous_non_main_sequence"
 
     if re.search(r"V(?:E|K|AR|COMP)?$", s):
         return True, "K_main_sequence_explicit"
@@ -152,6 +160,18 @@ def build_base_rows(raw_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
             else ""
         )
         new["k_dwarf_classification"] = classification
+        new["strict_k_dwarf"] = (
+            "yes" if classification == "K_main_sequence_explicit" else "no"
+        )
+        new["mass_evidence_class"] = (
+            "direct_or_dynamical"
+            if row.get("pl_bmassprov") == "Mass"
+            else (
+                "mass_radius_relation"
+                if row.get("pl_bmassprov") == "M-R relationship"
+                else ("unknown" if not row.get("pl_bmasse") else "other")
+            )
+        )
         new["preferred_mass_band_0p8_1p5_me"] = mass_band(mass)
         new["jwst_mast_obs_count"] = ""
         new["jwst_mast_status"] = "not_queried"
@@ -199,6 +219,8 @@ def write_csv(rows: list[dict[str, Any]], output_path: Path, retrieval_time: str
     headers = source_columns + [
         "distance_ly",
         "k_dwarf_classification",
+        "strict_k_dwarf",
+        "mass_evidence_class",
         "preferred_mass_band_0p8_1p5_me",
         "jwst_mast_obs_count",
         "jwst_mast_status",
