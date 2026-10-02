@@ -30,7 +30,7 @@ from urllib.request import Request, urlopen
 TAP_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
 TABLE = "pscomppars"
 
-COLUMNS = [
+CANDIDATE_COLUMNS = [
     "pl_name",
     "hostname",
     "sy_dist",
@@ -65,8 +65,14 @@ COLUMNS = [
 ]
 
 
-def archive_query() -> str:
-    select_list = ", ".join(COLUMNS)
+def fetch_schema() -> set[str]:
+    query = "select column_name from TAP_SCHEMA.columns where table_name = 'pscomppars'"
+    payload = fetch_csv(query)
+    return {row["column_name"] for row in csv.DictReader(io.StringIO(payload))}
+
+
+def archive_query(columns: list[str]) -> str:
+    select_list = ", ".join(columns)
     return (
         f"select {select_list} from {TABLE} "
         "where tran_flag = 1 "
@@ -186,10 +192,10 @@ def enrich_with_mast(rows: list[dict[str, Any]], delay_seconds: float) -> None:
         row["jwst_mast_status"] = status
 
 
-def write_csv(rows: list[dict[str, Any]], output_path: Path, retrieval_time: str) -> None:
+def write_csv(rows: list[dict[str, Any]], output_path: Path, retrieval_time: str, source_columns: list[str]) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    headers = COLUMNS + [
+    headers = source_columns + [
         "distance_ly",
         "k_dwarf_classification",
         "preferred_mass_band_0p8_1p5_me",
@@ -239,8 +245,34 @@ def main() -> int:
 
     retrieval_time = datetime.now(timezone.utc).isoformat()
 
-    print("Querying NASA Exoplanet Archive...")
-    query = archive_query()
+    print("Checking NASA Exoplanet Archive TAP schema...")
+    try:
+        available = fetch_schema()
+    except Exception as exc:
+        print(f"ERROR: NASA TAP schema request failed: {exc}", file=sys.stderr)
+        return 2
+
+    missing_required = [name for name in ["pl_name", "hostname", "st_spectype", "tran_flag"] if name not in available]
+    if missing_required:
+        print(
+            "ERROR: Required PSCompPars columns are missing: "
+            + ", ".join(missing_required),
+            file=sys.stderr,
+        )
+        return 2
+
+    selected_columns = [
+        name for name in CANDIDATE_COLUMNS
+        if name in available
+    ]
+    for required in ["pl_name", "hostname", "st_spectype", "tran_flag"]:
+        if required not in selected_columns:
+            selected_columns.append(required)
+
+    print("Using live-schema columns:")
+    print(", ".join(selected_columns))
+
+    query = archive_query(selected_columns)
     print(query)
 
     try:
@@ -259,7 +291,7 @@ def main() -> int:
         print("Querying MAST for JWST observations...")
         enrich_with_mast(rows, args.mast_delay)
 
-    write_csv(rows, args.output, retrieval_time)
+    write_csv(rows, args.output, retrieval_time, selected_columns)
 
     unique_hosts = len({r.get("hostname", "") for r in rows if r.get("hostname")})
     within_mass = sum(
