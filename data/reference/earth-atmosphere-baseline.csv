@@ -1,0 +1,12 @@
+species,formula,approx_volume_fraction_or_abundance,unit,reference,note
+Nitrogen,N2,78.084,percent,NOAA Jetstream,dry atmosphere reference
+Oxygen,O2,20.946,percent,NOAA Jetstream,dry atmosphere reference
+Argon,Ar,0.934,percent,NOAA Jetstream,dry atmosphere reference
+Carbon dioxide,CO2,0.042,percent,NOAA Jetstream,variable over time
+Methane,CH4,1.92,ppm,NOAA Jetstream,trace gas
+Nitrous oxide,N2O,0.33,ppm,NOAA Jetstream,trace gas
+Carbon monoxide,CO,0.10,ppm,NOAA Jetstream,trace gas
+Ozone,O3,0.07,ppm,NOAA Jetstream,trace gas
+Nitrogen dioxide,NO2,0.02,ppm,NOAA Jetstream,trace gas
+Water vapor,H2O,0-4,percent,NOAA Jetstream,highly variable; not part of dry composition
+Argon,Ar,0.934,percent,NOAA Jetstream,dry atmosphere reference

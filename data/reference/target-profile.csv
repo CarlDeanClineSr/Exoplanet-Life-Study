@@ -1,0 +1,12 @@
+parameter,preferred_working_profile,type,reason,hard_filter
+host_spectral_class,K0-K9 V,selection,target class of interest,no
+planet_mass,0.8-1.5 Earth masses,selection,terrestrial candidate window,no
+planet_radius,rocky-compatible,selection,avoid assuming a composition from radius alone,no
+habitable_zone_candidate,yes,selection,temperate-orbit starting point,no
+transit_for_transmission,yes,observing constraint,required for conventional transmission spectroscopy,no
+host_activity,low_or_characterized,observing constraint,reduce stellar contamination and model the radiation environment,no
+rotation,measured_or_modeled,physical variable,climate and circulation context,no
+magnetosphere,unknown_allowed,physical variable,not directly measurable for most exoplanets,no
+plate_tectonics,unknown_allowed,physical variable,not established as necessary,no
+repeated_spectra,preferred,evidence,persistence and variability testing,no
+independent_confirmation,preferred,evidence,reduction of instrument/model systematics,no
