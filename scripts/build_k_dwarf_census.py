@@ -55,7 +55,7 @@ COLUMNS = [
     "pl_orbeccen",
     "pl_insol",
     "pl_eqt",
-    "pl_tranflag",
+    "tran_flag",
     "pl_trandep",
     "pl_ntranspec",
     "pl_nespec",
@@ -69,7 +69,7 @@ def archive_query() -> str:
     select_list = ", ".join(COLUMNS)
     return (
         f"select {select_list} from {TABLE} "
-        "where pl_tranflag = 1 "
+        "where tran_flag = 1 "
         "and st_spectype is not null "
         "and st_spectype like 'K%'"
     )
