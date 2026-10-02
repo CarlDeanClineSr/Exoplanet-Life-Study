@@ -1,0 +1,5 @@
+instrument,mode,wavelength_min_um,wavelength_max_um,resolving_power_note,exoplanet_relevance,source
+NIRSpec,PRISM/CLEAR,0.60,5.30,R approximately 100,near-infrared transit spectroscopy,JWST User Documentation
+NIRSpec,medium/high resolution gratings,0.70,5.27,R approximately 1000-2700,selected molecular bands,JWST User Documentation
+MIRI,LRS,5.00,14.00,R approximately 100 near 7.5 um,mid-infrared low-resolution spectroscopy,JWST User Documentation
+MIRI,MRS,4.90,27.90,R approximately 1500-3500,mid-infrared spectroscopy,JWST User Documentation

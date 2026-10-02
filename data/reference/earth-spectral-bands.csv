@@ -1,0 +1,29 @@
+molecule,formula,representative_band_um,region,jwst_instrument_coverage,interpretation_role,source
+O2,O2,0.63,VIS/NIR,NIRSpec,oxygen band,Schwieterman et al. 2018
+O2,O2,0.69,VIS/NIR,NIRSpec,oxygen B band,Schwieterman et al. 2018
+O2,O2,0.76,VIS/NIR,NIRSpec,oxygen A band,Schwieterman et al. 2018
+O2,O2,1.27,NIR,NIRSpec,oxygen/possible O4 contribution,Schwieterman et al. 2018
+O4,O2-O2,1.06,NIR,NIRSpec,oxygen pressure and false-positive context,Meadows et al. 2018
+O4,O2-O2,1.27,NIR,NIRSpec,oxygen pressure and false-positive context,Meadows et al. 2018
+H2O,H2O,0.94,NIR,NIRSpec,water vapor,Robinson et al. / Earth spectrum literature
+H2O,H2O,1.4,NIR,NIRSpec,water vapor,Earth-like spectrum literature
+H2O,H2O,1.9,NIR,NIRSpec,water vapor,Earth-like spectrum literature
+H2O,H2O,2.7,NIR,NIRSpec,water vapor,Schwieterman et al. 2018
+H2O,H2O,6.3,MIR,MIRI,water vapor,thermal IR literature
+CO2,CO2,1.6,NIR,NIRSpec,carbon dioxide,thermal/translation spectrum literature
+CO2,CO2,2.0,NIR,NIRSpec,carbon dioxide,thermal/translation spectrum literature
+CO2,CO2,2.7,NIR,NIRSpec,carbon dioxide,thermal IR literature
+CO2,CO2,4.3,MIR/NIR,NIRSpec + MIRI,carbon dioxide,Earth-like atmosphere literature
+CO2,CO2,15.0,MIR,MIRI,carbon dioxide,thermal IR literature
+CH4,CH4,3.3,NIR,NIRSpec,methane,exoplanet biosignature literature
+CH4,CH4,7.7,MIR,MIRI,methane,exoplanet biosignature literature
+N2O,N2O,2.3,NIR,NIRSpec,nitrous oxide,atmospheric biosignature literature
+N2O,N2O,4.5,NIR,NIRSpec,nitrous oxide,exoplanet biosignature literature
+N2O,N2O,7.7,MIR,MIRI,nitrous oxide,exoplanet biosignature literature
+CO,CO,4.7,NIR,NIRSpec,abiotic diagnostic,atmospheric spectroscopy literature
+NO2,NO2,6.1,MIR,MIRI,reactive nitrogen,lightning/photochemical context
+HNO3,HNO3,7.5,MIR,MIRI,oxidized nitrogen,exoplanet atmosphere modeling
+HNO3,HNO3,11.3,MIR,MIRI,oxidized nitrogen,strong remote-sensing region
+O3,O3,9.6,MIR,MIRI,ozone,exoplanet biosignature literature
+SO2,SO2,7.3,MIR,MIRI,sulfur/volcanic chemistry,atmospheric spectroscopy literature
+SO2,SO2,8.6,MIR,MIRI,sulfur/volcanic chemistry,atmospheric spectroscopy literature
