@@ -1,0 +1,33 @@
+name: Refresh K-dwarf census
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build NASA Exoplanet Archive census
+        run: |
+          python scripts/build_k_dwarf_census.py \
+            --output data/live/k_dwarf_transiting_targets.csv
+
+      - name: Upload census snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: k-dwarf-census-snapshot
+          path: data/live/k_dwarf_transiting_targets.csv
